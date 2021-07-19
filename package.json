@@ -9,14 +9,41 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "date-fns": "^2.22.1",
+    "fs": "0.0.1-security",
     "google-spreadsheet": "^3.1.15",
     "googleapis": "^81.0.0",
+    "googleapis-common": "^5.0.3",
+    "http": "0.0.1-security",
+    "http2": "^3.3.7",
+    "https": "^1.0.0",
+    "net": "^1.0.2",
     "next": "11.0.1",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "stream": "0.0.2",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alex-3006/PCGeschaeft.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alex-3006/PCGeschaeft/issues"
+  },
+  "homepage": "https://github.com/Alex-3006/PCGeschaeft#readme"
 }
