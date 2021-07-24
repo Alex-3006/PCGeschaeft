@@ -2,7 +2,6 @@ module.exports = {
   future: {
     webpack5: false,
   },
-
   webpack: (config) => {
     config.resolve.fallback = { 
       fs: false,
@@ -10,7 +9,6 @@ module.exports = {
       net : false,
       tls: false,
     };
-
     return config;
   },
 };
