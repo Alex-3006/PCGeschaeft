@@ -7,30 +7,64 @@ export async function getServerSideProps() {
 
   const sheets = google.sheets({ version: 'v4', auth });
 
-  const range = `A2:H2`;
+  const range = `A2:AF2`;
 
   const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: process.env.SHEET_ID_KUNDE,
+    spreadsheetId: process.env.SHEET_ID_WARENKORB,
     range,
   });
 
-  const [ID, Name, Geburtsdatum, Wohnort, Beitrittsdatum, Email,Telefonnummer, Kreditkartennummer] = response.data.values[0];
+  const response1 = await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.SHEET_ID_KOMPONENTE,
+    range,
+  });
+
+  const [WARENKORB, AnzahlKomponenten, Komponenten] = response.data.values[0];
+
+  const [KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abmessungen, Preis, Verfuegbar, Arbeitsspeicher, Taktrate, DDRType, Produktkategorie, RGB, Stromverbrauch, Pruefsiegel, WARENKORBkom, PORTSkom, Aufloesung, VRAM, CUDAKerne, Raytracing, minimalTemperatur, maximalTemperatur, Kabelanzahl, Speicherkapazitaet, Formfaktor, Wirkungsgrad, Lautstaerke, WLAN, Bluethoot, Kerne, Threads, IGPU] = response1.data.values[0];
 
   return {
     props: {
-      ID,
+      WARENKORB,
+      AnzahlKomponenten,
+      Komponenten,
+      KOMPONENTENUMMER,
+      Hersteller,
       Name,
-      Geburtsdatum,
-      Wohnort,
-      Beitrittsdatum,
-      Email,
-      Telefonnummer,
-      Kreditkartennummer
+      Gewicht,
+      Abmessungen,
+      Preis,
+      Verfuegbar,
+      Arbeitsspeicher,
+      Taktrate,
+      DDRType,
+      Produktkategorie,
+      RGB,
+      Stromverbrauch,
+      Pruefsiegel,
+      WARENKORBkom,
+      PORTSkom,
+      Aufloesung,
+      VRAM,
+      CUDAKerne,
+      Raytracing,
+      minimalTemperatur,
+      maximalTemperatur,
+      Kabelanzahl,
+      Speicherkapazitaet,
+      Formfaktor,
+      Wirkungsgrad,
+      Lautstaerke,
+      WLAN,
+      Bluethoot,
+      Kerne,
+      Threads,
+      IGPU,
     }
   }
 }
 
-export default function Post({ ID, Name, Geburtsdatum, Wohnort, Beitrittsdatum, Email, Telefonnummer, Kreditkartennummer }) {
+export default function Post({ WARENKORB, AnzahlKomponenten, Komponenten, KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abmessungen, Preis, Verfuegbar, Arbeitsspeicher, Taktrate, DDRType, Produktkategorie, RGB, Stromverbrauch, Pruefsiegel, WARENKORBkom, PORTSkom, Aufloesung, VRAM, CUDAKerne, Raytracing, minimalTemperatur, maximalTemperatur, Kabelanzahl, Speicherkapazitaet, Formfaktor, Wirkungsgrad, Lautstaerke, WLAN, Bluethoot, Kerne, Threads, IGPU }) {
   return (
     <div>
       <Head>
@@ -38,21 +72,27 @@ export default function Post({ ID, Name, Geburtsdatum, Wohnort, Beitrittsdatum, 
       </Head>
       <header>
         <div className="headerTitle">
-          <Link href="/"><h2>Home</h2></Link>
+          <Link href="/"><h2>PC Geschäft</h2></Link>
         </div>
         <div className="headerIcons">
-          <Link href="./shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
-          <Link href="./Kunde"><i className="fa fa-male"></i></Link>
+          <Link href="/shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
+          <Link href="/Kunde/2"><i className="fa fa-male"></i></Link>
         </div>
         <div className="headerLogIn">
-          <Link href="./login"><h4>Log In</h4></Link>
-          <h4>|</h4>
-          <Link href="/register"><h4>Register</h4></Link>
+          {/* <Link href="/login"><h4>Log In</h4></Link> */}
         </div>
       </header>
       <div className="kundecontent">
+        <div className="kundeinfo">
+          <h2>WARENKORB:</h2>
+          <h2>{WARENKORB}</h2>
+        </div>
+        <div className="kundeinfo">
+          <h2>Anzahl an Komponenten:</h2>
+          <h2>{AnzahlKomponenten}</h2>
+        </div>
         <h2>Products:</h2>
-        
+        <h3>{Hersteller + Name}</h3>
       </div>
     </div>
   )

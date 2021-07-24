@@ -44,16 +44,14 @@ export default function Post({ title, content, title1, content1, title2, content
       </Head>
       <header>
         <div className="headerTitle">
-          <Link href="/"><h2>Home</h2></Link>
+          <Link href="/"><h2>PC Geschäft</h2></Link>
         </div>
         <div className="headerIcons">
-          <Link href="./shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
-          <Link href="./Kunde"><i className="fa fa-male"></i></Link>
+          <Link href="/shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
+          <Link href="/Kunde/2"><i className="fa fa-male"></i></Link>
         </div>
         <div className="headerLogIn">
-          <Link href="./login"><h4>Log In</h4></Link>
-          <h4>|</h4>
-          <Link href="/register"><h4>Register</h4></Link>
+          {/* <Link href="/login"><h4>Log In</h4></Link> */}
         </div>
       </header>
       <div className="content">

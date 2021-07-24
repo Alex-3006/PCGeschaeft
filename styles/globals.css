@@ -60,10 +60,6 @@ header {
   align-items: center;
 }
 
-.headerLogIn h4 {
-  margin: 0.5rem;
-}
-
 .contentTitle {
   width: 75%;
   text-align: center;
@@ -122,4 +118,25 @@ td {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.12);
+}
+
+.rechnungenButton {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 100%;
+}
+
+.rechnungButton {
+  background-color: white;
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.KompButton {
+  margin: 2rem;
+  background-color: white;
+  padding: 0.5rem;
+  font-weight: 300;
+  font-size: 1rem;
 }

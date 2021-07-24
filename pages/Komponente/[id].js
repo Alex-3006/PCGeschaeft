@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 import Link from 'next/link';
 import Head from 'next/head';
+import { useState } from 'react';
 
 export async function getServerSideProps({ query }) {
     const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'] });
@@ -9,8 +10,6 @@ export async function getServerSideProps({ query }) {
 
     const { id } = query;
     const range = `A${id}:AF${id}`;
-    const range1 = `A${id}:P${id}`;
-    const range2 = `A${id}:B${id}`;
 
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId: process.env.SHEET_ID_KOMPONENTE,
@@ -27,15 +26,22 @@ export async function getServerSideProps({ query }) {
         range,
     });
 
+    const response3 = await sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.SHEET_ID_WARENKORB,
+        range,
+    });
+
     const [KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abmessungen, Preis, Verfuegbar, Arbeitsspeicher, Taktrate, DDRType, Produktkategorie, RGB, Stromverbrauch, Pruefsiegel, WARENKORB, PORTSkom, Aufloesung, VRAM, CUDAKerne, Raytracing, minimalTemperatur, maximalTemperatur, Kabelanzahl, Speicherkapazitaet, Formfaktor, Wirkungsgrad, Lautstaerke, WLAN, Bluethoot, Kerne, Threads, IGPU] = response.data.values[0];
 
-    const [ID, HDMI, VGA, Klinkenanschluss, USBC, USB1, USB2, USB3, DVID, PIN8, PIN6, PIN4, SATA, KOMPONENTENpo, Displayport, Ethernet] = response1.data.values[0];
+    const [WARENKORBID, AnzahlKomponenten, Komponenten] = response3.data.values[0];
 
-    const [PORTS, KOMPONENTE] = response2.data.values[0];
+    if (id != 5) {
+        const [ID, HDMI, VGA, Klinkenanschluss, USBC, USB1, USB2, USB3, DVID, PIN8, PIN6, PIN4, SATA, KOMPONENTENpo, Displayport, Ethernet] = response1.data.values[0];
 
-    return {
-        props: {
-            Komponenten: {
+        const [PORTS, KOMPONENTE] = response2.data.values[0];
+
+        return {
+            props: {
                 KOMPONENTENUMMER,
                 Hersteller,
                 Name,
@@ -67,9 +73,7 @@ export async function getServerSideProps({ query }) {
                 Bluethoot,
                 Kerne,
                 Threads,
-                IGPU
-            },
-            Ports: {
+                IGPU,
                 ID,
                 HDMI,
                 VGA,
@@ -85,17 +89,65 @@ export async function getServerSideProps({ query }) {
                 SATA,
                 KOMPONENTENpo,
                 Displayport,
-                Ethernet
-            },
-            KOMPONENTE_PORTS: {
+                Ethernet,
                 PORTS,
-                KOMPONENTE
+                KOMPONENTE,
+                WARENKORBID,
+                AnzahlKomponenten,
+                Komponenten,
             }
+        }
+
+    }
+    else {
+        return {
+            props: {
+                KOMPONENTENUMMER,
+                Hersteller,
+                Name,
+                Gewicht,
+                Abmessungen,
+                Preis,
+                Verfuegbar,
+                Arbeitsspeicher,
+                Taktrate,
+                DDRType,
+                Produktkategorie,
+                RGB,
+                Stromverbrauch,
+                Pruefsiegel,
+                WARENKORB,
+                PORTSkom,
+                Aufloesung,
+                VRAM,
+                CUDAKerne,
+                Raytracing,
+                minimalTemperatur,
+                maximalTemperatur,
+                Kabelanzahl,
+                Speicherkapazitaet,
+                Formfaktor,
+                Wirkungsgrad,
+                Lautstaerke,
+                WLAN,
+                Bluethoot,
+                Kerne,
+                Threads,
+                IGPU,
+                WARENKORBID,
+                AnzahlKomponenten,
+                Komponenten,
+            }
+
         }
     }
 }
 
-export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abmessungen, Preis, Verfuegbar, Arbeitsspeicher, Taktrate, DDRType, Produktkategorie, RGB, Stromverbrauch, Pruefsiegel, WARENKORB, PORTSkom, Aufloesung, VRAM, CUDAKerne, Raytracing, minimalTemperatur, maximalTemperatur, Kabelanzahl, Speicherkapazitaet, Formfaktor, Wirkungsgrad, Lautstaerke, WLAN, Bluethoot, Kerne, Threads, IGPU, ID, HDMI, VGA, Klinkenanschluss, USBC, USB1, USB2, USB3, DVID, PIN8, PIN6, PIN4, SATA, KOMPONENTEnpo, Displayport, Ethernet, PORTS, KOMPONENTE }) {
+export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abmessungen, Preis, Verfuegbar, Arbeitsspeicher, Taktrate, DDRType, Produktkategorie, RGB, Stromverbrauch, Pruefsiegel, WARENKORB, PORTSkom, Aufloesung, VRAM, CUDAKerne, Raytracing, minimalTemperatur, maximalTemperatur, Kabelanzahl, Speicherkapazitaet, Formfaktor, Wirkungsgrad, Lautstaerke, WLAN, Bluethoot, Kerne, Threads, IGPU, ID, HDMI, VGA, Klinkenanschluss, USBC, USB1, USB2, USB3, DVID, PIN8, PIN6, PIN4, SATA, KOMPONENTEnpo, Displayport, Ethernet, PORTS, KOMPONENTE, WARENKORBID, AnzahlKomponenten, Komponenten }) {
+    const addToCartHandler = async (e) => {
+        console.log("Added " + Name + " to cart");
+    }
+
     return (
         <div>
             <Head>
@@ -103,16 +155,14 @@ export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abme
             </Head>
             <header>
                 <div className="headerTitle">
-                    <Link href="/"><h2>Home</h2></Link>
+                    <Link href="/"><h2>PC Geschäft</h2></Link>
                 </div>
                 <div className="headerIcons">
-                    <Link href="./shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
-                    <Link href="./Kunde"><i className="fa fa-male"></i></Link>
+                    <Link href="/shoppingCart"><i className="fa fa-shopping-cart"></i></Link>
+                    <Link href="/Kunde/2"><i className="fa fa-male"></i></Link>
                 </div>
                 <div className="headerLogIn">
-                    <Link href="./login"><h4>Log In</h4></Link>
-                    <h4>|</h4>
-                    <Link href="/register"><h4>Register</h4></Link>
+                    {/* <Link href="/login"><h4>Log In</h4></Link> */}
                 </div>
             </header>
             <h2 className="contentTitle">{Hersteller, Name}</h2>
@@ -327,7 +377,7 @@ export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abme
                     </tr>
                 </tbody>
             </table>}
-            {(Produktkategorie == "GPU" && Portskom == KOMPONENTE && PORTS == PORTSkom) && <div>
+            {(Produktkategorie == "GPU" && PORTSkom == KOMPONENTE && PORTS == PORTSkom) && <div>
                 <h4 className="contentDescription">Ports:</h4>
                 <table>
                     <tbody>
@@ -351,7 +401,7 @@ export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abme
                 </table>
             </div>
             }
-            {(Produktkategorie == "Mainboard" && ID == 2) && <div>
+            {(Produktkategorie == "Mainboard" && PORTSkom == KOMPONENTE && PORTS == PORTSkom) && <div>
                 <h4 className="contentDescription">Ports:</h4>
                 <table>
                     <tbody>
@@ -395,7 +445,7 @@ export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abme
                 </table>
             </div>
             }
-            {(Produktkategorie == "Gehause" && ID == 3) && <div>
+            {(Produktkategorie == "Gehause" && PORTSkom == KOMPONENTE && PORTS == PORTSkom) && <div>
                 <h4 className="contentDescription">Ports:</h4>
                 <table>
                     <tbody>
@@ -419,6 +469,7 @@ export default function Post({ KOMPONENTENUMMER, Hersteller, Name, Gewicht, Abme
                 </table>
             </div>
             }
+            <button onClick={addToCartHandler} className="KompButton">Add to Cart</button>
         </div>
     )
 }
